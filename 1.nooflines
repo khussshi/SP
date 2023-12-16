@@ -1,0 +1,26 @@
+2.	%{
+3.	    #include <stdio.h>
+4.	    int line_count = 0;
+5.	    int char_count = 0;
+6.	%}
+7.	
+8.	%option noyywrap
+9.	
+10.	%%
+11.	\n {
+12.	    line_count ++;
+13.	    char_count ++;
+14.	}
+15.	
+16.	. {
+17.	    char_count ++;
+18.	}
+19.	%%
+20.	
+21.	int main() {
+22.	    yylex();
+23.	    printf("number of lines is : %d\n", line_count);
+24.	    printf("number of characters is : %d\n", char_count);
+25.	
+26.	    return 0;
+27.	}
