@@ -1,0 +1,37 @@
+%{
+    #include <stdio.h>  
+    int count_words=0;
+    int count_character=0;
+    int count_space=0;
+    int count_line = 0;
+%}
+
+%option noyywrap
+
+%%
+[a-zA-Z]+ {
+    count_words++;
+    count_character += yyleng;
+}
+[ \t\r\f\v]+ {
+    count_space++;
+}
+[\n] {
+    count_line++;
+    count_character++;
+}
+. {
+    count_character++;
+}
+%%
+
+int main() {
+    yylex();
+
+    printf("Number of words are : %d\n", count_words);
+    printf("Number of blank spaces are : %d\n", count_space);
+    printf("Number of lines are : %d\n", count_line);
+    printf("Number of characters are : %d\n", count_character);
+
+    return 0;
+}
