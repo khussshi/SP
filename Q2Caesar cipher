@@ -1,0 +1,25 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+[a-zA-Z] {
+    int shifted = yytext[0] + 3; // Shift by 3 positions
+    if ((yytext[0] >= 'a' && yytext[0] <= 'z' && shifted > 'z') ||
+        (yytext[0] >= 'A' && yytext[0] <= 'Z' && shifted > 'Z')) {
+        yytext[0] = yytext[0] - 23; // Wrap around if needed
+    } else {
+        yytext[0] = shifted;
+    }
+    printf("%c", yytext[0]);
+}
+
+. { printf("%c", yytext[0]); }
+
+%%
+
+int main(void) {
+    yylex();
+    return 0;
+}
+int yywrap(){return(1);}
