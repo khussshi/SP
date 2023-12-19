@@ -1,0 +1,37 @@
+%{
+    #include <stdio.h>
+    int valid = 1;    
+%}
+
+%option noyywrap
+
+%%
+[0-9]+ {
+    //valid
+}
+[+-/*] {
+    //valid
+}
+[(] {
+    //valid
+}
+[)] {
+    //valid
+}
+\n {
+    //ignore any new lines
+}
+. {
+    //if any other character is encountered the expression becomes invalid
+    valid = 0;
+}
+%%
+
+int main() {
+    yylex();
+
+    if(valid) printf("This is a valid arithmetic expression \n");
+    else printf("This is an invalid arithmetic expression \n");
+
+    return 0;
+}
